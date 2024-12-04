@@ -1,5 +1,17 @@
-import axios, { AxiosResponse } from 'axios';
-import { getEnvironentVariable } from '../utils';
+/**
+ * Functions Inputs/Outputs:
+ * - uploadImage:
+ *   Input: imageBase64: string (base64 encoded image data)
+ *   Output: Promise<AxiosResponse> containing uploaded image details
+ *
+ * Component Capabilities:
+ * - Manages image upload functionality using ImgBB API
+ * - Handles multipart form data for image upload
+ * - Securely manages API key through environment variables
+ */
+
+import axios, { AxiosResponse } from "axios";
+import { getEnvironentVariable } from "../utils";
 
 // You can use any hosting service of your preference.
 // In this case, we will use ImgBB API: https://api.imgbb.com/.
@@ -15,14 +27,14 @@ import { getEnvironentVariable } from '../utils';
 // to import your secret values to EAS.
 
 const imageApi = axios.create({
-    baseURL: 'https://api.imgbb.com/1',
-    headers: { 'Content-Type': 'multipart/form-data' },
-    params: { key: getEnvironentVariable('IMGBB_API_KEY') },
+  baseURL: "https://api.imgbb.com/1",
+  headers: { "Content-Type": "multipart/form-data" },
+  params: { key: getEnvironentVariable("IMGBB_API_KEY") },
 });
 
 export const uploadImage = (imageBase64: string): Promise<AxiosResponse> => {
-    const data = new FormData();
-    data.append('image', imageBase64);
+  const data = new FormData();
+  data.append("image", imageBase64);
 
-    return imageApi.post('/upload', data);
+  return imageApi.post("/upload", data);
 };
